@@ -1,23 +1,44 @@
-import logo from './logo.svg';
 import './App.css';
+import DonutLargeIcon from '@material-ui/icons/DonutLarge';
+import ChatIcon from '@material-ui/icons/Chat';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <div className="sidebar">
+
+        <header>
+          <img
+            className="header--avatar" 
+            src="https://www.w3schools.com/howto/img_avatar2.png" alt="" 
+          />
+          <div className="header--buttons">
+            <div className="header--btn">
+              <DonutLargeIcon style={{color: '#919191'}}/>
+            </div>
+            <div className="header--btn">
+              <ChatIcon style={{color: '#919191'}}/>
+            </div>
+            <div className="header--btn">
+              <MoreVertIcon style={{color: '#919191'}}/>
+            </div>
+          </div>    
+        </header>
+
+        <div className="search">
+
+        </div>
+
+        <div className="charList">
+
+        </div>
+
+     </div>
+     <div className="contentArea">
+
+     </div>
     </div>
   );
 }

@@ -12,15 +12,48 @@ import './ChatWindow.css';
 
 
 function ChatWindow() {
+  let recognition = null;
+  let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition;
+
+  if(SpeechRecognition !== undefined) {
+    recognition = new SpeechRecognition();
+  }
+
   const [emojiOpen, setEmojiOpen] = useState(false);
+  const [text, setText] = useState('');
+  const [listening, setListening] = useState(false);
 
-  const handleEmojiClick = () => {
-
+  const handleEmojiClick = (e, {emoji}) => {
+    setText(text + emoji);
   }
 
   const handleOpenEmoji = () => {
     setEmojiOpen(!emojiOpen);
   }
+
+  const handleSendClick = () => {
+
+  }
+
+  const handleMicClick = () => {
+    if(recognition !== null) {
+
+      recognition.onstart = () => {
+        setListening(true);
+      }
+
+      recognition.onend = () => {
+        setListening(false);
+      }
+
+      recognition.onresult = (e) => {
+        setText(e.results[0][0].transcript);
+      }
+
+      recognition.start();
+    }  
+  }
+
   return (
       <div className="chatWindow">
         <div className="chatWindow--header">
@@ -88,13 +121,27 @@ function ChatWindow() {
               className="chatWindow--input" 
               type="text"
               placeholder="Digite uma mensagem"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
             />
           </div>
 
           <div className="chatWindow--pos">
-            <div className="chatWindow--btn">
-              <SendIcon  style={{color: '#919191'}}/>
-            </div>  
+            { text === ''  ? (
+              <div 
+                className="chatWindow--btn"
+                onClick={handleMicClick}
+              >
+                <MicIcon  style={{color: listening ? '#009688' : '#919191'}}/>
+              </div>
+            ) : (
+              <div 
+                className="chatWindow--btn"
+                onClick={handleSendClick}
+              >
+                <SendIcon  style={{color: '#919191'}}/>
+              </div>  
+            )}
           </div>
 
         </div>

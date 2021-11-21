@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import EmojiPicker  from 'emoji-picker-react';
 import SearchIcon from '@material-ui/icons/Search';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
@@ -12,7 +12,9 @@ import './ChatWindow.css';
 import MessageItem from './MessageItem';
 
 
-function ChatWindow() {
+function ChatWindow({user}) {
+  const body = useRef();
+
   let recognition = null;
   let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition;
 
@@ -23,7 +25,32 @@ function ChatWindow() {
   const [emojiOpen, setEmojiOpen] = useState(false);
   const [text, setText] = useState('');
   const [listening, setListening] = useState(false);
-  const [list, setList] = useState([{}]);
+  const [list, setList] = useState([
+    {author: 123, body: 'Oi'},
+    {author: 123, body: 'Oii'},
+    {author: 1234, body: 'Oie'},
+    {author: 123, body: 'Oi'},
+    {author: 123, body: 'Oii'},
+    {author: 1234, body: 'Oie'},
+    {author: 123, body: 'Oi'},
+    {author: 123, body: 'Oii'},
+    {author: 1234, body: 'Oie'},
+    {author: 123, body: 'Oi'},
+    {author: 123, body: 'Oii'},
+    {author: 1234, body: 'Oie'},
+    {author: 123, body: 'Oi'},
+    {author: 123, body: 'Oii'},
+    {author: 1234, body: 'Oie'},
+    {author: 123, body: 'Oi'},
+    {author: 123, body: 'Oii'},
+    {author: 1234, body: 'Oie'},
+    {author: 123, body: 'Oi'},
+    {author: 123, body: 'Oii'},
+    {author: 1234, body: 'Oie'},
+    {author: 123, body: 'Oi'},
+    {author: 123, body: 'Oii'},
+    {author: 1234, body: 'Oie'},
+  ]);
 
   const handleEmojiClick = (e, {emoji}) => {
     setText(text + emoji);
@@ -56,6 +83,15 @@ function ChatWindow() {
     }  
   }
 
+  useEffect(() => {
+    let alturaConteudoBody = body.current.scrollHeight;
+    let alturaDisponivelDoComponent = body.current.offsetHeight
+
+    if(alturaConteudoBody > alturaDisponivelDoComponent) {
+      body.current.scrollTop = alturaConteudoBody - alturaDisponivelDoComponent;
+    }
+  },[list])
+
   return (
       <div className="chatWindow">
         <div className="chatWindow--header">
@@ -85,11 +121,12 @@ function ChatWindow() {
 
         </div>
 
-        <div className="chatWindow--body">
+        <div ref={body} className="chatWindow--body">
           {list.map((item, key) => (
             <MessageItem 
               key={key}
               data={item}
+              user={user}
             />
           ))}
         </div>

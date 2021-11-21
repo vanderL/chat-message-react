@@ -19,6 +19,11 @@ function App() {
 
   ]);
   const [activeChat, setActiveChat] =  useState({});
+  const [user, setUser] =  useState({
+    id: 1234,
+    avatar: 'https://www.w3schools.com/howto/img_avatar2.png',
+    name: 'Vander Lima'
+  });
 
   return (
     <div className="App">
@@ -27,7 +32,7 @@ function App() {
         <header>
           <img
             className="header--avatar" 
-            src="https://www.w3schools.com/howto/img_avatar2.png" alt="" 
+            src={user.avatar} alt="" 
           />
           <div className="header--buttons">
             <div className="header--btn">
@@ -63,7 +68,9 @@ function App() {
       </div>
       <div className="contentArea">
         {activeChat.chatId !== undefined ? (
-          <ChatWindow />
+          <ChatWindow 
+            user={user}
+          />
         ) : (
           <ChatIntro />
         )}

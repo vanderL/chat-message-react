@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import ChatListItem from './components/ChatListItem';
 import ChatIntro from './components/ChatIntro';
 import ChatWindow from './components/ChatWindow';
+import NewChat from './components/NewChat';
 
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import ChatIcon from '@material-ui/icons/Chat';
@@ -24,10 +25,22 @@ function App() {
     avatar: 'https://www.w3schools.com/howto/img_avatar2.png',
     name: 'Vander Lima'
   });
+  const [showNewChat, setShowNewChat] = useState(false)
+
+  const handlOpen = () => {
+    setShowNewChat(true);
+}
 
   return (
     <div className="App">
      <div className="sidebar">
+       
+       <NewChat
+       chatList={chatList}
+        user={user} 
+        show={showNewChat}
+        setShow={setShowNewChat}
+       />
 
         <header>
           <img
@@ -38,7 +51,7 @@ function App() {
             <div className="header--btn">
               <DonutLargeIcon style={{color: '#919191'}}/>
             </div>
-            <div className="header--btn">
+            <div className="header--btn" onClick={handlOpen}>
               <ChatIcon style={{color: '#919191'}}/>
             </div>
             <div className="header--btn">
